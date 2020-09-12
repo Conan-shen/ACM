@@ -7,9 +7,6 @@ import os
 import time
 
 
-
-
-
 def divTextProcess(div):
     """
     处理<div>标签中<p>的文本内容
@@ -57,6 +54,7 @@ def work(url):
     html = urllib.request.urlopen(url).read()
     # 格式化
     soup = BeautifulSoup(html, 'lxml')
+    # print(soup)
     # 存储
     data_dict = {}
     # 找到主体内容
@@ -66,37 +64,75 @@ def work(url):
     # 找到题目标题、时间、和内存限制
     # ID
     data_dict['ID'] = find_ID(url)
-    # Title
-    data_dict['Title'] = mainContent.find_all(
-        name="div", attrs={"class": "title"})[0].contents[-1]
-    # Time Limit
-    data_dict['Time Limit'] = mainContent.find_all(
-        name="div", attrs={"class": "time-limit"})[0].contents[-1]
-    # Memory Limit
-    data_dict['Memory Limit'] = mainContent.find_all(
-        name="div", attrs={"class": "memory-limit"})[0].contents[-1]
+    try:
+        # Title
+        data_dict['Title'] = mainContent.find_all(
+            name="div", attrs={"class": "title"})[0].contents[-1]
+    except:
+        pass
+    try:
+        # Time Limit
+        data_dict['Time Limit'] = mainContent.find_all(
+            name="div", attrs={"class": "time-limit"})[0].contents[-1]
+    except:
+        pass
+    try:
+        # Memory Limit
+        data_dict['Memory Limit'] = mainContent.find_all(
+            name="div", attrs={"class": "memory-limit"})[0].contents[-1]
+    except:
+        pass
+    try:
+        # tag
+        tags = soup.find_all(name='span', attrs={"class": "tag-box"})
+        real_tags = []
+        for tag in tags:
+            print(tag.contents)
+            real_tags.append(tag.contents[-1].replace('\r\n', '').strip())
+        data_dict['Problem_tags'] = ", ".join(real_tags)
+        print(data_dict['Problem_tags'])
+    except:
+        pass
 
-    # 处理题目描述
-    data_dict['Problem Description'] = divTextProcess(
-        mainContent.find_all("div")[10])
+    try:
+        # 处理题目描述
+        data_dict['Problem Description'] = divTextProcess(
+            mainContent.find_all("div")[10])
+    except:
+        pass
 
-    div = mainContent.find_all(
-        name="div", attrs={"class": "input-specification"})[0]
-    data_dict['Input'] = divTextProcess(div)
+    try:
+        div = mainContent.find_all(
+            name="div", attrs={"class": "input-specification"})[0]
+        data_dict['Input'] = divTextProcess(div)
+    except:
+        pass
 
-    div = mainContent.find_all(
-        name="div", attrs={"class": "output-specification"})[0]
-    data_dict['Output'] = divTextProcess(div)
+    try:
+        div = mainContent.find_all(
+            name="div", attrs={"class": "output-specification"})[0]
+        data_dict['Output'] = divTextProcess(div)
+    except:
+        pass
 
-    # Input
-    div = mainContent.find_all(name="div", attrs={"class": "input"})[0]
-    data_dict['Sample Input'] = div.find_all("pre")[0].contents[0]
-    # Onput
-    div = mainContent.find_all(name="div", attrs={"class": "output"})[0]
-    data_dict['Sample Output'] = div.find_all("pre")[0].contents[0]
+    try:
+        # Input
+        div = mainContent.find_all(name="div", attrs={"class": "input"})[0]
+        data_dict['Sample Input'] = div.find_all("pre")[0].contents[0]
+    except:
+        pass
+    try:
+        # Onput
+        div = mainContent.find_all(name="div", attrs={"class": "output"})[0]
+        data_dict['Sample Output'] = div.find_all("pre")[0].contents[0]
+    except:
+        pass
 
-    div = mainContent.find_all(name="div", attrs={"class": "note"})[0]
-    data_dict['Note'] = divTextProcess(div)
+    try:
+        div = mainContent.find_all(name="div", attrs={"class": "note"})[0]
+        data_dict['Note'] = divTextProcess(div)
+    except:
+        pass
 
     data_dict['Source'] = '[' + data_dict['Title'] + ']' + '(' + url + ')'
 
