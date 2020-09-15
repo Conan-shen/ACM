@@ -10,3 +10,4 @@
 |D1332|[D. Walk on Matrix](https://codeforces.com/contest/1332/problem/D)|[C++](./codeforces/WalkOnMatrix/WalkOnMatrix.cpp)|bitmasks, constructive algorithms, math, *1700|
 |B1329|[B. Dreamoon Likes Sequences](https://codeforces.com/contest/1329/problem/B)|[C++](./codeforces/DreamoonLikesSequences/DreamoonLikesSequences.cpp)|bitmasks, combinatorics, math, *1700|
 |E1328|[E. Tree Queries](https://codeforces.com/contest/1328/problem/E)|[C++](./codeforces/TreeQueries/TreeQueries.cpp)|dfs and similar, graphs, trees, *1900|
+|D1328|[D. Carousel](https://codeforces.com/contest/1328/problem/D)|[C++](./codeforces/Carousel/Carousel.cpp)|constructive algorithms, dp, graphs, greedy, math, *1800|
